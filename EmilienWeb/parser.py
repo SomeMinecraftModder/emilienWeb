@@ -10,8 +10,5 @@ def parse(raw_data: bytes) -> Request:
         url = "/"
     headers = {k: v.strip() for k, v in [line.split(":", 1)
                                          for line in raw_data.decode().splitlines() if ":" in line]}
-    try:
-        data = raw_data.split(b"\r\n\r\n")[1].split(b"\r\n")  # noice
-    except IndexError:
-        data = ""
+    data = raw_data.split(b"\r\n\r\n")[1]
     return Request(raw_data, headers, method, url, data)
